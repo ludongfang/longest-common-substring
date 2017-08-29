@@ -5,15 +5,15 @@ using namespace std;
 
 int dp[MAXN][MAXN];
 /* ****
-** usage-Çó½âÁ½¸ö×Ö·û´®µÄ¹«¹²×Ó´®
-** param-µÚÒ»¸ö×Ö·û´®¡¢µÚ¶ş¸ö×Ö·û´®£¬×î³¤¹«¹²×Ó´®¡¢×î³¤¹«¹²×Ó´®³¤¶È
-** ¸´ÔÓ¶È-O(mn), ÆäÖĞm¡¢n·Ö±ğÎªÁ½¸ö×Ö·û´®µÄ³¤¶È
+** usage-æ±‚è§£ä¸¤ä¸ªå­—ç¬¦ä¸²çš„å…¬å…±å­ä¸²
+** param-ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²ã€ç¬¬äºŒä¸ªå­—ç¬¦ä¸²ï¼Œæœ€é•¿å…¬å…±å­ä¸²ã€æœ€é•¿å…¬å…±å­ä¸²é•¿åº¦
+** å¤æ‚åº¦-O(mn), å…¶ä¸­mã€nåˆ†åˆ«ä¸ºä¸¤ä¸ªå­—ç¬¦ä¸²çš„é•¿åº¦
 */
 void LCS(string s1, string s2, string & common_string, int & max_len)
 {
     int len1=s1.length();
     int len2=s2.length();
-    int start=0; // ×î³¤×Ó´®ÆğÊ¼Î»ÖÃ
+    int start=0; // æœ€é•¿å­ä¸²èµ·å§‹ä½ç½®
     if(s1=="" || s2=="")
         max_len=0;
     for(int i=0;i<len1;i++)
@@ -33,18 +33,18 @@ void LCS(string s1, string s2, string & common_string, int & max_len)
                 if(max_len<dp[i][j])
                 {
                     max_len=dp[i][j];
-                    int start_temp = i - dp[i][j] + 1; // ¼ÇÂ¼µ±Ç°×î³¤µÄ×Ó´®ÔÚs1ÖĞ¿ªÊ¼Î»ÖÃ
-                    if(start_temp==start) // Èç¹ûÊÇÍ¬Ò»¸ö×Ó´®
+                    int start_temp = i - dp[i][j] + 1; // è®°å½•å½“å‰æœ€é•¿çš„å­ä¸²åœ¨s1ä¸­å¼€å§‹ä½ç½®
+                    if(start_temp==start) // å¦‚æœæ˜¯åŒä¸€ä¸ªå­ä¸²
                     {
                         string s="X";
                         s[0]=s1[i];
-                        common_string.append(s);
+                        common_string+=s;
                     }
-                    // ·ñÔò¸³ÖµĞÂ´®
+                    // å¦åˆ™èµ‹å€¼æ–°ä¸²
                     else
                     {
                         start=start_temp;
-                        common_string=s1.substr(start,i+1);
+                        common_string=s1.substr(start,max_len);
                     }
                 }
             }
@@ -57,12 +57,14 @@ int main()
     string str1,str2;
     string common="";
     int length=0;
-    cout<<"ÇëÊäÈëµÚÒ»¸ö×Ö·û´®£º"<<endl;
+    cout<<"è¯·è¾“å…¥ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²ï¼š"<<endl;
     cin>>str1;
-    cout<<"ÇëÊäÈëµÚ¶ş¸ö×Ö·û´®£º"<<endl;
+    cout<<"è¯·è¾“å…¥ç¬¬äºŒä¸ªå­—ç¬¦ä¸²ï¼š"<<endl;
     cin>>str2;
+//    str1="sfdjkskfdjhklfjdrtyuiopxmnzvz,v";
+//    str2="zmvn,dskfjdfertyuiolksglskfg;slkg";
     memset(dp,0,sizeof(dp));
     LCS(str1,str2,common,length);
-    cout<<"×î³¤¹«¹²×Ó´®Îª£º"<<common<<"\nÆä³¤¶ÈÎª£º"<<length<<endl;
+    cout<<"æœ€é•¿å…¬å…±å­ä¸²ä¸ºï¼š"<<common<<"\nå…¶é•¿åº¦ä¸ºï¼š"<<length<<endl;
     return 0;
 }
