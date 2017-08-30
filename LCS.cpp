@@ -1,9 +1,9 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cstring>
 #define MAXN 10005
 using namespace std;
 
-int dp[MAXN][MAXN];
+int dp[MAXN];
 /* ****
 ** usage-求解两个字符串的公共子串
 ** param-第一个字符串、第二个字符串，最长公共子串、最长公共子串长度
@@ -18,22 +18,22 @@ void LCS(string s1, string s2, string & common_string, int & max_len)
         max_len=0;
     for(int i=0;i<len1;i++)
     {
-        for(int j=0;j<len2;j++)
+        for(int j=len2-1;j>=0;j--)
         {
             if(s1[i]==s2[j])
             {
                 if(i>0&&j>0)
                 {
-                    dp[i][j]=dp[i-1][j-1]+1;
+                    dp[j]=dp[j-1]+1;
                 }
                 else
                 {
-                    dp[i][j]=1;
+                    dp[j]=1;
                 }
-                if(max_len<dp[i][j])
+                if(max_len<dp[j])
                 {
-                    max_len=dp[i][j];
-                    int start_temp = i - dp[i][j] + 1; // 记录当前最长的子串在s1中开始位置
+                    max_len=dp[j];
+                    int start_temp = i - dp[j] + 1; // 记录当前最长的子串在s1中开始位置
                     if(start_temp==start) // 如果是同一个子串
                     {
                         string s="X";
@@ -47,6 +47,10 @@ void LCS(string s1, string s2, string & common_string, int & max_len)
                         common_string=s1.substr(start,max_len);
                     }
                 }
+            }
+            else
+            {
+                dp[j]=0;
             }
         }
     }
